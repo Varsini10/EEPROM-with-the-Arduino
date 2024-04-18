@@ -1,0 +1,46 @@
+// Include the 12C Wire Library
+#include "Wire.h"
+
+// Include the Servo Library
+#include "Servo.h"
+
+// EEPROM 12C Address
+#define EEPROM 12C ADDRESS ox50
+
+// Analog pin for potentiometer
+int analogPin = 0;
+
+// Integer to hold potentiometer value
+int vat = 0;
+
+// Byte to hold data read from EEPROM
+int readVal = 0;
+
+// Integer to hold number of addresses to fill
+int maxaddress = 1500;
+
+
+//Create a Servo object
+Servo myservo;
+
+// Function to write to EEPROOM
+void writeEEPROM(int address,byte val, int i2c_address)
+{
+// Begin transmission to 12C EEPROM
+Wire.beginTransmission (i2c_address);
+
+// Send memory address as two 8-bit bytes
+Wire.write((int)(address >> 8)); //MSB
+Wire.write((int)(address & 0xFF)); //LSB
+
+// Send data to be stored
+Wire.write (val);
+
+// End the transmission
+Wire.end Transmission ( );
+
+// Add 5ms delay for EEPROM
+delay (5);
+}
+
+
